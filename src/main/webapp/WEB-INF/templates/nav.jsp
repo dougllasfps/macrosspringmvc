@@ -56,3 +56,14 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+<div class="row">
+    <div class="col-md-5">
+        <c:if test="${not empty msg}">
+            <div id="messages" class="alert alert-${msg.severity.level} fade in">
+                ${msg.message}
+            </div>
+        </c:if>
+    </div>
+</div>
+

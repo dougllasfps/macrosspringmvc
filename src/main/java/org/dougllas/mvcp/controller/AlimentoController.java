@@ -2,6 +2,7 @@ package org.dougllas.mvcp.controller;
 
 import org.dougllas.mvcp.model.Alimento;
 import org.dougllas.mvcp.service.AlimentoService;
+import org.dougllas.mvcp.view.ViewMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,15 +61,16 @@ public class AlimentoController implements Serializable {
     public String delete( @PathVariable("id") Integer id, Model model ){
         Alimento deleted = alimentoService.findById(id);
         alimentoService.delete(deleted);
-        model.addAttribute("msg", "Deletado com sucesso!");
+        model.addAttribute("msg", ViewMessage.infoMessage("Deletado com sucesso!"));
         inicializaFiltroConsulta(model);
+        listAll(model);
         return "/alimentos/list";
     }
 
     @RequestMapping(value = "/alimentos/add", method = RequestMethod.POST)
     public String saveOrUpdate( @ModelAttribute("bean") Alimento alimento, Model model ){
         alimentoService.save(alimento);
-        model.addAttribute("msg", "Salvo com sucesso!");
+        model.addAttribute("msg", ViewMessage.infoMessage("Salvo com sucesso!"));
         inicializaFiltroConsulta(model);
         return "/alimentos/list";
     }
