@@ -36,8 +36,9 @@
                 </div>
 
                 <div class="row">
+
                     <div class="col-sm-1">
-                        <input type="submit" class="btn btn-info" value="Consultar" />
+                        <input type="submit" class="btn btn-default" value="Consultar" />
                     </div>
 
                     <div class="col-sm-1">
@@ -66,7 +67,7 @@
                             <tr>
                                 <td>${produto.descricao}</td>
                                 <td><a class="btn btn-success" onclick="window.location.href='${ctx}/alimentos/editar/${produto.id}'">Editar</a> </td>
-                                <td><a id="btnDelete" class="btn btn-danger" onclick="ajaxSubmit('${ctx}/alimentos/remove/${produto.id}','GET',null);" >Excluir</a> </td>
+                                <td><a id="btnDelete" class="btn btn-danger" onclick="window.location.href='${ctx}/alimentos/remove/${produto.id}'" >Excluir</a> </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -84,7 +85,6 @@
                 dataType:"html",
                 success : function(data) {
                     var element = $('<z></z>');
-
                     if(render){
                         var dom = element.append(data);
                         var component = dom.find(render);

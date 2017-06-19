@@ -6,12 +6,15 @@ import org.dougllas.mvcp.view.ViewMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Criado por dougllas.sousa em 07/06/2017.
@@ -41,7 +44,13 @@ public class AlimentoController implements Serializable {
     @RequestMapping(value = "/alimentos", method = RequestMethod.POST)
     public String find( @ModelAttribute("filtro") Alimento filtro, Model model ){
         model.addAttribute("filtro", filtro);
-        model.addAttribute("list", alimentoService.filter(filtro));
+        List<Alimento> result = alimentoService.filter(filtro);
+        model.addAttribute("list", result);
+
+        if(CollectionUtils.isEmpty(result)){
+            model.addAttribute("msg", ViewMessage.warnMessage("Nenhum Resultado."));
+        }
+
         return "/alimentos/list";
     }
 
@@ -58,20 +67,20 @@ public class AlimentoController implements Serializable {
     }
 
     @RequestMapping(value = "/alimentos/remove/{id}", method = RequestMethod.GET)
-    public String delete( @PathVariable("id") Integer id, Model model ){
+    public String delete(@PathVariable("id") Integer id, Model model){
         Alimento deleted = alimentoService.findById(id);
         alimentoService.delete(deleted);
         model.addAttribute("msg", ViewMessage.infoMessage("Deletado com sucesso!"));
         inicializaFiltroConsulta(model);
         listAll(model);
-        return "/alimentos/list";
+        return "redirect:/alimentos";
     }
 
     @RequestMapping(value = "/alimentos/add", method = RequestMethod.POST)
-    public String saveOrUpdate( @ModelAttribute("bean") Alimento alimento, Model model ){
+    public String saveOrUpdate(@ModelAttribute("bean") Alimento alimento, Model model, RedirectAttributes redirectAttributes){
         alimentoService.save(alimento);
-        model.addAttribute("msg", ViewMessage.infoMessage("Salvo com sucesso!"));
+        redirectAttributes.addFlashAttribute("msg", ViewMessage.infoMessage("Salvo com sucesso!"));
         inicializaFiltroConsulta(model);
-        return "/alimentos/list";
+        return "redirect:/alimentos";
     }
 }
