@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Cadastro de Alimento</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 </head>
 <body>
     <jsp:include page="/WEB-INF/templates/nav.jsp"/>
@@ -21,10 +21,23 @@
                 <legend>Cadastro</legend>
 
                 <div class="row">
+                    <div class="col-sm-1">
+                        <form:hidden path="id" />
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label class="control-label">Descrição: *</label>
                             <form:input type="text" path="descricao" cssClass="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="control-label">Unidade de Medida: *</label>
+                            <form:select path="unidadeMedida" items="${unidadesMedida}" cssClass="form-control" />
                         </div>
                     </div>
                 </div>

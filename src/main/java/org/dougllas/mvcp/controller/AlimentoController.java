@@ -1,6 +1,7 @@
 package org.dougllas.mvcp.controller;
 
 import org.dougllas.mvcp.model.Alimento;
+import org.dougllas.mvcp.model.UnidadeMedida;
 import org.dougllas.mvcp.service.AlimentoService;
 import org.dougllas.mvcp.view.ViewMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Criado por dougllas.sousa em 07/06/2017.
@@ -57,17 +60,21 @@ public class AlimentoController implements Serializable {
     @RequestMapping(value = "/alimentos/novo", method = RequestMethod.GET)
     public String prepareInsert( Model model ){
         model.addAttribute("bean", new Alimento());
+        model.addAttribute("unidadesMedida", getUnidadesMedida());
+        model.addAttribute("unidadeMedidaSelecionada", null);
         return "/alimentos/form";
     }
 
     @RequestMapping(value = "/alimentos/editar/{id}", method = RequestMethod.GET)
     public String prepareUpdate( @PathVariable("id") Integer id, Model model ){
-        model.addAttribute("bean", alimentoService.findById(id));
+        Alimento itemSelecionado = alimentoService.findById(id);
+        model.addAttribute("bean", itemSelecionado);
+        model.addAttribute("unidadesMedida", getUnidadesMedida());
         return "/alimentos/form";
     }
 
     @RequestMapping(value = "/alimentos/remove/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") Integer id, Model model){
+    public String delete( @PathVariable("id") Integer id, Model model ){
         Alimento deleted = alimentoService.findById(id);
         alimentoService.delete(deleted);
         model.addAttribute("msg", ViewMessage.infoMessage("Deletado com sucesso!"));
@@ -82,5 +89,14 @@ public class AlimentoController implements Serializable {
         redirectAttributes.addFlashAttribute("msg", ViewMessage.infoMessage("Salvo com sucesso!"));
         inicializaFiltroConsulta(model);
         return "redirect:/alimentos";
+    }
+
+    private Map getUnidadesMedida(){
+        Map<UnidadeMedida, String> unidades = new LinkedHashMap(UnidadeMedida.values().length);
+        unidades.put(null, "Selecione...");
+        for (UnidadeMedida unidadeMedida : UnidadeMedida.values()) {
+            unidades.put(unidadeMedida, unidadeMedida.getDesc());
+        }
+        return unidades;
     }
 }

@@ -23,4 +23,5 @@ public class AlimentoService extends PersistentEntityService<Alimento> {
         QueryCreator queryCreator = getJpaEntityRepository().generateExampleQuery(alimento, "a", true);
         return getJpaEntityRepository().queryForList(queryCreator);
     }
+
 }
