@@ -84,7 +84,7 @@ public class AlimentoController implements Serializable {
     }
 
     @RequestMapping(value = "/alimentos/add", method = RequestMethod.POST)
-    public String saveOrUpdate(@ModelAttribute("bean") Alimento alimento, Model model, RedirectAttributes redirectAttributes){
+    public String saveOrUpdate( @ModelAttribute("bean") Alimento alimento, Model model, RedirectAttributes redirectAttributes){
         alimentoService.save(alimento);
         redirectAttributes.addFlashAttribute("msg", ViewMessage.infoMessage("Salvo com sucesso!"));
         inicializaFiltroConsulta(model);
