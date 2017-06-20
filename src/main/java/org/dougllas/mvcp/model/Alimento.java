@@ -27,7 +27,7 @@ public class Alimento implements Serializable, PersistentEntity{
     @Column(precision = 10, scale = 3)
     private BigDecimal quantidade;
 
-    @Column
+    @Transient
     private Double calorias;
 
     @Column

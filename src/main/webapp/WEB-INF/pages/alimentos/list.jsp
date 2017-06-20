@@ -42,6 +42,9 @@
                     </div>
 
                     <div class="col-sm-1">
+                    </div>
+
+                    <div class="col-sm-1">
                         <input type="button"
                                onclick="window.location.href='${ctx}/alimentos/novo'"
                                class="btn btn-warning" value="Novo" />
@@ -66,8 +69,8 @@
                         <c:forEach var="produto" items="${list}">
                             <tr>
                                 <td>${produto.descricao}</td>
-                                <td><a class="btn btn-success" onclick="window.location.href='${ctx}/alimentos/editar/${produto.id}'">Editar</a> </td>
-                                <td><a id="btnDelete" class="btn btn-danger" onclick="window.location.href='${ctx}/alimentos/remove/${produto.id}'" >Excluir</a> </td>
+                                <td><a id="btnEditar" class="btn btn-success" onclick="window.location.href='${ctx}/alimentos/editar/${produto.id}'">Editar </a> </td>
+                                <td><a id="btnDelete" class="btn btn-danger"  onclick="window.location.href='${ctx}/alimentos/remove/${produto.id}'">Excluir</a> </td>
                             </tr>
                         </c:forEach>
                         </tbody>

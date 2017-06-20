@@ -1,4 +1,4 @@
-package org.dougllas.mvcp.view;
+package org.dougllas.mvcp.view.messages;
 
 /**
  * Criado por dougllas.sousa em 14/06/2017.

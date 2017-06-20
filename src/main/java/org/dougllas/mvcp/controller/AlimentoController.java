@@ -3,7 +3,7 @@ package org.dougllas.mvcp.controller;
 import org.dougllas.mvcp.model.Alimento;
 import org.dougllas.mvcp.model.UnidadeMedida;
 import org.dougllas.mvcp.service.AlimentoService;
-import org.dougllas.mvcp.view.ViewMessage;
+import org.dougllas.mvcp.view.messages.ViewMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
