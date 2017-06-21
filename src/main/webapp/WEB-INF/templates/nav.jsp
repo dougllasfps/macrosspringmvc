@@ -14,6 +14,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
 <script src="${pageContext.request.contextPath}/resources/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.validate.js"></script>
 
 
 <div class="col-md-10 col-md-offset-1">

@@ -13,18 +13,59 @@
 
 <html>
 <head>
-    <title>Macros</title>
+    <title>Dados Pessoa</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/templates/nav.jsp"/>
 
     <script>
         jQuery(function () {
+
             maskDate('.campoData');
             maskInteger('.campoInteiro');
             maskQuantidade('.campoDouble');
             createDatePicker('.campoData');
             createDialog('.dialog');
+
+            $('#formulario').validate({
+                errorClass: 'invalid',
+                rules:{
+                    data: {
+                        required:true
+                    },
+                    idade: {
+                        required : true,
+                        min:10
+                    },
+                    peso: {
+                        required:true
+                    },
+                    altura: {
+                        required:true,
+                        min:100
+                    }
+                },
+                messages:{
+                    data:{
+                        required: 'Campo obrigatório'
+                    },
+                    idade:{
+                        required: 'Campo obrigatório',
+                        min : 'Idade deve ser maior que 10'
+                    },
+                    peso : 'Campo obrigatório',
+                    altura : {
+                        required: 'Campo obrigatório',
+                        min: 'Altura deve ser maior que 100 cm.'
+                    }
+
+                },
+                highlight: function(element, errorClass) {
+                    $(element).fadeOut(function() {
+                        $(element).fadeIn();
+                    });
+                }
+            });
         });
     </script>
 
@@ -32,27 +73,32 @@
         .dialog{
             display: none;
         }
+
+        .invalid{
+            color: #FF0000;
+            font-weight: normal;
+        }
     </style>
 
     <div class="col-md-10 col-md-offset-1" id="test">
         <fieldset>
             <legend>Macros</legend>
 
-            <form:form action="${pageContext.request.contextPath}/tmb/add" modelAttribute="tmb">
+            <form:form id="formulario" action="${pageContext.request.contextPath}/tmb/add" modelAttribute="tmb">
 
                 <form:hidden path="id" />
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Data</label>
+                            <label for="inputData" class="control-label">Data</label>
                             <form:input id="inputData" path="data" cssClass="form-control campoData" />
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Idade</label>
+                            <label for="inputIdade" class="control-label">Idade</label>
                             <form:input id="inputIdade" path="idade" cssClass="form-control campoInteiro" />
                         </div>
                     </div>
@@ -61,22 +107,22 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Peso</label>
+                            <label for="inputPeso" class="control-label">Peso</label>
                             <form:input id="inputPeso" path="peso" cssClass="form-control campoDouble" />
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label">Altura</label>
-                            <form:input id="inputAltura" path="altura" cssClass="form-control campoInteiro" />
+                            <label for="inputAltura" class="control-label">Altura</label>
+                            <form:input id="inputAltura" path="altura" cssClass="form-control campoInteiro"  />
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-1">
-                        <input type="submit" class="btn btn-default" value="Salvar" />
+                        <input type="submit" class="btn btn-default" value="Salvar"  />
                     </div>
                 </div>
 
