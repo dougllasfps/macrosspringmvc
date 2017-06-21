@@ -27,60 +27,43 @@
             createDatePicker('.campoData');
             createDialog('.dialog');
 
-            $('#formulario').validate({
-                errorClass: 'invalid',
-                rules:{
-                    data: {
-                        required:true
-                    },
-                    idade: {
-                        required : true,
-                        min:10
-                    },
-                    peso: {
-                        required:true
-                    },
-                    altura: {
-                        required:true,
-                        min:100
-                    }
-                },
-                messages:{
-                    data:{
-                        required: 'Campo obrigatório'
-                    },
-                    idade:{
-                        required: 'Campo obrigatório',
-                        min : 'Idade deve ser maior que 10'
-                    },
-                    peso : 'Campo obrigatório',
-                    altura : {
-                        required: 'Campo obrigatório',
-                        min: 'Altura deve ser maior que 100 cm.'
-                    }
-
-                },
-                highlight: function(element, errorClass) {
-                    $(element).fadeOut(function() {
-                        $(element).fadeIn();
-                    });
-                }
-            });
+//            $('#formulario').validate({
+//                errorClass: 'invalid',
+//                rules:{
+//                    data: {
+//                        required:true
+//                    },
+//                    idade: {
+//                        required : true,
+//                        min:10
+//                    },
+//                    peso: {
+//                        required:true
+//                    },
+//                    altura: {
+//                        required:true,
+//                        min:100
+//                    }
+//                },
+//                messages:{
+//                    idade:{
+//                        min : 'Idade deve ser maior que 10'
+//                    },
+//                    altura : {
+//                        min: 'Altura deve ser maior que 100 cm.'
+//                    }
+//
+//                },
+//                highlight: function(element, errorClass) {
+//                    $(element).fadeOut(function() {
+//                        $(element).fadeIn();
+//                    });
+//                }
+//            });
         });
     </script>
 
-    <style>
-        .dialog{
-            display: none;
-        }
-
-        .invalid{
-            color: #FF0000;
-            font-weight: normal;
-        }
-    </style>
-
-    <div class="col-md-10 col-md-offset-1" id="test">
+    <div class="col-md-10 col-md-offset-1">
         <fieldset>
             <legend>Macros</legend>
 

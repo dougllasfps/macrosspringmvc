@@ -9,16 +9,24 @@ import java.text.DecimalFormat;
 /**
  * Criado por dougllas.sousa em 20/06/2017.
  */
-public class MoneyConverter extends PropertyEditorSupport {
+public class DecimalPropertyEditor extends PropertyEditorSupport {
+
+    private int fractionDigits;
+
+    public DecimalPropertyEditor(int fractionDigits) {
+        this.fractionDigits = fractionDigits;
+    }
 
     @Override
     public void setAsText(String value) throws IllegalArgumentException {
-        if (value != null && !value.isEmpty()) {
-            value = value.replace(".", "");
-            value = value.replace(",", ".");
-            BigDecimal convert = new BigDecimal(value);
-            setValue(convert);
+        if(value == null || "".equals(value.trim())){
+            return;
         }
+
+        value = value.replace(".", "");
+        value = value.replace(",", ".");
+        BigDecimal convert = new BigDecimal(value);
+        setValue(convert);
     }
 
     @Override
@@ -29,9 +37,9 @@ public class MoneyConverter extends PropertyEditorSupport {
 
         DecimalFormat decimalFormat = DecimalFormatter.getDecimalFormat();
         BigDecimal value = new BigDecimal((Double) getValue());
-        value = value.setScale(3, BigDecimal.ROUND_HALF_EVEN);
-        decimalFormat.setMaximumFractionDigits(3);
-        decimalFormat.setMinimumFractionDigits(3);
+        value = value.setScale(fractionDigits, BigDecimal.ROUND_HALF_EVEN);
+        decimalFormat.setMaximumFractionDigits(fractionDigits);
+        decimalFormat.setMinimumFractionDigits(fractionDigits);
         String format = decimalFormat.format(value);
         return format;
     }

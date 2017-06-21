@@ -8,7 +8,7 @@ import java.util.Calendar;
 /**
  * Criado por dougllas.sousa em 20/06/2017.
  */
-public class CalendarConverter extends PropertyEditorSupport {
+public class CalendarPropertyEditor extends PropertyEditorSupport {
 
     private static final SimpleDateFormat DATE_FORMAT;
 
@@ -18,6 +18,9 @@ public class CalendarConverter extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
+        if(text == null || "".equals(text.trim())){
+            return;
+        }
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(DATE_FORMAT.parse(text));

@@ -2,16 +2,17 @@ package org.dougllas.mvcp.controller;
 
 import org.dougllas.mvcp.model.TMB;
 import org.dougllas.mvcp.service.TMBService;
-import org.dougllas.mvcp.view.converter.CalendarConverter;
-import org.dougllas.mvcp.view.converter.MoneyConverter;
+import org.dougllas.mvcp.view.converter.CalendarPropertyEditor;
+import org.dougllas.mvcp.view.converter.DecimalPropertyEditor;
 import org.dougllas.mvcp.view.messages.ViewMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -27,19 +28,20 @@ public class TMBController implements Serializable{
 
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.registerCustomEditor( Calendar.class, new CalendarConverter() );
-        binder.registerCustomEditor( Double.class, new MoneyConverter() );
+        binder.registerCustomEditor( Calendar.class, new CalendarPropertyEditor() );
+        binder.registerCustomEditor( Double.class, new DecimalPropertyEditor(3) );
     }
 
     @RequestMapping(value = "/tmb", method = RequestMethod.GET)
-    public String list(Model model){
-        model.addAttribute("tmb", new TMB());
-        model.addAttribute("list", tmbService.findAll());
-        return "tmb/list";
+    public ModelAndView list(){
+        ModelAndView model = new ModelAndView("tmb/list");
+        model.addObject("tmb", new TMB());
+        model.addObject("list", tmbService.findAll());
+        return model;
     }
 
-    @RequestMapping(value = "/tmb/add",method = RequestMethod.POST)
-    public String add( @ModelAttribute("tmb") TMB tmb, RedirectAttributes attributes ){
+    @RequestMapping(value = "/tmb/add",method = {RequestMethod.POST, RequestMethod.PUT})
+    public String add(@Valid @ModelAttribute("tmb") TMB tmb, RedirectAttributes attributes ){
         tmbService.save(tmb);
         attributes.addFlashAttribute("msg", ViewMessage.infoMessage("Salvo com sucesso!"));
         return "redirect:/tmb";
@@ -54,9 +56,10 @@ public class TMBController implements Serializable{
     }
 
     @RequestMapping(value = "/tmb/editar/{id}", method = RequestMethod.GET)
-    public String prepareUpdate( @PathVariable("id") Integer id, Model model){
+    public ModelAndView prepareUpdate( @PathVariable("id") Integer id){
         TMB tmb = tmbService.findById(id);
-        model.addAttribute("tmb", tmb);
-        return "tmb/list";
+        ModelAndView model = new ModelAndView( "tmb/list");
+        model.addObject("tmb", tmb);
+        return model;
     }
 }

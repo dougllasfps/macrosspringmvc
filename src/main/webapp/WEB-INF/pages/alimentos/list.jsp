@@ -10,19 +10,33 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <html>
+
 <head>
-    <title>Alimentos</title>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css" />
+
+<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.mask.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/utilfunctions.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/applicationfunctions.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
+<script src="${pageContext.request.contextPath}/resources/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.validate.js"></script>
+
 </head>
 <body>
+<jsp:include page="/WEB-INF/templates/nav.jsp"/>
 
-    <jsp:include page="/WEB-INF/templates/nav.jsp"/>
-    <c:set var="ctx" value="${pageContext.request.contextPath}" />
-
-    <div class="col-md-10 col-md-offset-1">
-        <form:form modelAttribute="filtro" id="frmBusca">
+<div class="col-md-10 col-md-offset-1">
+        <form:form modelAttribute="filtro" id="frmBusca" action="${pageContext.request.contextPath}/alimentos">
             <fieldset>
                 <legend>Busca</legend>
 
@@ -53,7 +67,6 @@
 
             </fieldset>
         </form:form>
-
         <c:if test="${not empty list}">
             <div class="row">
                 <div class="col-md-6">
@@ -78,9 +91,9 @@
                 </div>
             </div>
         </c:if>
-    </div>
+</div>
 
-    <script>
+<script>
         var ajaxSubmit = function (url, type, render) {
             $.ajax({
                 url : url,

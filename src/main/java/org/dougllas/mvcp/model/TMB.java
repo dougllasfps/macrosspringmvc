@@ -3,6 +3,7 @@ package org.dougllas.mvcp.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -17,16 +18,20 @@ public class TMB implements Serializable, PersistentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column
     private Double peso;
 
     @Column
+    @NotNull
     private Integer altura;
 
     @Column
+    @NotNull
     private Integer idade;
 
     @Column
+    @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Calendar data;
 

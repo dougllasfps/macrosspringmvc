@@ -17,6 +17,17 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.validate.js"></script>
 
 
+<style>
+    .dialog{
+        display: none;
+    }
+
+    .invalid{
+        color: #FF0000;
+        font-weight: normal;
+    }
+</style>
+
 <div class="col-md-10 col-md-offset-1">
     <nav class="navbar navbar-default">
         <div class="container-fluid">

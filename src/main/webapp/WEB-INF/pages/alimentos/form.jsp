@@ -22,11 +22,31 @@
         jQuery(function () {
             maskQuantidade('.inputQuantidade');
             fcCalculaCalorias();
+
+            $('#formulario').validate({
+                errorClass: 'invalid',
+                rules:{
+                    descricao: {   required:true },
+                    unidadeMedida: {   required : true  },
+                    quantidade: {  required:true },
+                    proteina: { required:true   },
+                    carbos: { required:true },
+                    gordura: { required:true }
+                },
+                messages:{},
+                highlight: function(element, errorClass) {
+                    $(element).fadeOut(function() {
+                        $(element).fadeIn();
+                    });
+                }
+            });
         });
+
     </script>
 
     <div class="col-md-10 col-md-offset-1">
-        <form:form action="${pageContext.request.contextPath}/alimentos/add" method="post" modelAttribute="bean">
+        <form:form id="formulario" action="${pageContext.request.contextPath}/alimentos/add" method="post" modelAttribute="bean">
+
             <fieldset>
                 <legend>Cadastro</legend>
 

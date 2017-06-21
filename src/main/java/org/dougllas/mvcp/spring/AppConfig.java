@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 @Configuration
 @ComponentScan("org.dougllas.mvcp")
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "org.dougllas.mvcp.repository")
 public class AppConfig implements Serializable {
 
     public static ApplicationContextProvider PROVIDER_INSTANCE;
@@ -68,7 +70,7 @@ public class AppConfig implements Serializable {
         jpaProperties.put("hibernate.show_sql", true);
         jpaProperties.put("hibernate.format_sql", true);
         jpaProperties.put("hibernate.generate_statistics", false);
-        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
+//        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         return jpaProperties;
     }
 
