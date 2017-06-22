@@ -71,14 +71,15 @@ public class AlimentoController implements Serializable {
         return model;
     }
 
-    @RequestMapping(value = "/alimentos/remove/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/alimentos/remove/{id}", method = RequestMethod.POST)
     public ModelAndView delete( @PathVariable("id") Integer id ){
-        final Alimento deleted = alimentoService.findById(id);
-        alimentoService.delete(deleted);
-
-        ModelAndView model = new ModelAndView("redirect:/alimentos");
+        if(id != null) {
+            final Alimento deleted = alimentoService.findById(id);
+            if(deleted != null)
+                alimentoService.delete(deleted);
+        }
+        ModelAndView model = new ModelAndView("/alimentos");
         model.addObject("msg", ViewMessage.infoMessage("Deletado com sucesso!"));
-        model.addObject("filtro", new Alimento());
         model.addObject("list", alimentoService.findAll());
 
         return model;

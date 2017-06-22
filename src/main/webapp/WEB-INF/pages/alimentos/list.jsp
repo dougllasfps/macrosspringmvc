@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.dataTables.min.css" type="text/css" />
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.mask.js"></script>
@@ -35,6 +36,8 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
     <script src="${pageContext.request.contextPath}/resources/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.min.js"></script>
 
     <style>
         .center{text-align:center;}
@@ -107,7 +110,7 @@
                                         <td class="center">
                                             <a id="btnDelete"
                                                class="btn btn-danger"
-                                               onclick="if(confirm('Confirma a exclusão?')){window.location.href='${ctx}/alimentos/remove/${produto.id}';}">Excluir
+                                               onclick="submitDelete(${produto.id})">Excluir
                                             </a>
                                         </td>
                                     </tr>
@@ -129,21 +132,21 @@
 </div>
 
 <script>
+
     var submitSearch = function () {
-        $.ajax({
-            url : '${ctx}/alimentos',
-            data:{'descricao' : $('#inputDescricao').val() },
-            type: 'POST',
-            success : function( response ) {
+        $.post('${ctx}/alimentos',
+            {
+                'descricao' : $('#inputDescricao').val()
+            },
+            function( response ){
                 var parsedHTML = $.parseHTML(response);
                 var resultTableContent = $(parsedHTML).find('#resultTableContent');
                 var messagesPanel = $(parsedHTML).find('#messagesPanel');
 
                 $('#resultTableContent').html(resultTableContent);
                 $('#messagesPanel').html(messagesPanel);
-            },
-        });
-        return false;
+            }
+        );
     };
 
     $('#consultarButton').on('click', function () {
@@ -154,6 +157,22 @@
         submitSearch();
         return false;
     });
+
+    var submitDelete = function (id) {
+        $.post('${ctx}/alimentos/remove/'+id,
+        {
+            'id' : id
+        },
+        function( response ) {
+            debugger;
+            var parsedHTML = $.parseHTML(response);
+            var resultTableContent = $(parsedHTML).find('#resultTableContent');
+            var messagesPanel = $(parsedHTML).find('#messagesPanel');
+
+            $('#resultTableContent').html(resultTableContent);
+            $('#messagesPanel').html(messagesPanel);
+        });
+    }
 
 </script>
 
