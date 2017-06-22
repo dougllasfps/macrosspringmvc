@@ -2,7 +2,7 @@
  * Created by dougllas.sousa on 20/06/2017.
  */
 
-var calculaCalorias = function ( proteinas, carbos, gorduras ) {
+function calculaCalorias( proteinas, carbos, gorduras ) {
 
     if(!proteinas){
         proteinas = 0;
@@ -17,4 +17,12 @@ var calculaCalorias = function ( proteinas, carbos, gorduras ) {
     }
 
     return (proteinas * 4) + (carbos * 4) + (gorduras * 9);
+}
+
+function confirmSubmit( message , callback){
+    if(!confirm(message)){
+        return false;
+    }
+
+    callback();
 }

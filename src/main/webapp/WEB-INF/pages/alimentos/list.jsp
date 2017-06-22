@@ -16,49 +16,62 @@
 
 <head>
 
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
+    <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css" />
 
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.mask.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/utilfunctions.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/applicationfunctions.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.validate.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.mask.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.validate.js"></script>
+
+    <script src="${pageContext.request.contextPath}/resources/js/utilfunctions.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/applicationfunctions.js"></script>
+
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <style>
+        .center{text-align:center;}
+    </style>
 
 </head>
 <body>
+
 <jsp:include page="/WEB-INF/templates/nav.jsp"/>
 
 <div class="col-md-10 col-md-offset-1">
-        <form:form modelAttribute="filtro" id="frmBusca" action="${pageContext.request.contextPath}/alimentos">
+        <form:form id="frmBusca" modelAttribute="filtro">
+            <div class="well">
             <fieldset>
                 <legend>Busca</legend>
 
                 <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label">Descrição: *</label>
-                            <form:input type="text" path="descricao" cssClass="form-control" />
+                            <label class="control-label">Descrição: </label>
+                            <input id="inputDescricao" type="text" name="descricao" class="form-control" />
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
 
-                    <div class="col-sm-1">
-                        <input type="submit" class="btn btn-default" value="Consultar" />
+                    <div class="col-md-1">
+                        <button id="consultarButton" type="button" class="btn btn-default" value="Consultar" >
+                            Consultar
+                        </button>
                     </div>
 
                     <div class="col-sm-1">
                     </div>
 
-                    <div class="col-sm-1">
+                    <div class="col-md-1">
                         <input type="button"
                                onclick="window.location.href='${ctx}/alimentos/novo'"
                                class="btn btn-warning" value="Novo" />
@@ -66,58 +79,80 @@
                 </div>
 
             </fieldset>
+            </div>
         </form:form>
-        <c:if test="${not empty list}">
+        <div class="well">
             <div class="row">
-                <div class="col-md-6">
-                    <table id="resultTable" class="table table-bordered table-hover">
+                <div class="col-md-12" id="resultTableContent" name="resultTableContent">
+                    <table id="resultTable" style="background: #ffffff;" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Produto</th>
+                            <th class="center">Produto</th>
                             <th></th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="produto" items="${list}">
-                            <tr>
-                                <td>${produto.descricao}</td>
-                                <td><a id="btnEditar" class="btn btn-success" onclick="window.location.href='${ctx}/alimentos/editar/${produto.id}'">Editar </a> </td>
-                                <td><a id="btnDelete" class="btn btn-danger"  onclick="window.location.href='${ctx}/alimentos/remove/${produto.id}'">Excluir</a> </td>
-                            </tr>
-                        </c:forEach>
+                            <c:choose>
+                                <c:when test="${not empty list}" >
+                                    <c:forEach var="produto" items="${list}">
+                                        <tr>
+                                        <td class="center">${produto.descricao}</td>
+                                        <td class="center">
+                                            <a id="btnEditar"
+                                               class="btn btn-success"
+                                               onclick="window.location.href='${ctx}/alimentos/editar/${produto.id}'">Editar
+                                            </a>
+                                        </td>
+                                        <td class="center">
+                                            <a id="btnDelete"
+                                               class="btn btn-danger"  o
+                                               onclick="if(confirm('Confirma a exclusão?')){window.location.href='${ctx}/alimentos/remove/${produto.id}';}">Excluir
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td colspan="3">
+                                            Nenhum Resultado.
+                                        </td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </c:if>
+        </div>
 </div>
 
-<script>
-        var ajaxSubmit = function (url, type, render) {
+    <script>
+        var submitSearch = function () {
             $.ajax({
-                url : url,
-                type: type,
-                dataType:"html",
-                success : function(data) {
-                    var element = $('<z></z>');
-                    if(render){
-                        var dom = element.append(data);
-                        var component = dom.find(render);
-                        $('#result').html(component);
-                    }else{
-                        $('#result').html(data);
-                    }
+                url : '${ctx}/alimentos',
+                data:{'descricao' : $('#inputDescricao').val() },
+                type: 'POST',
+                success : function(response) {
+                    var parsedHTML = $.parseHTML(response);
+                    var resultTableContent = $(parsedHTML).find('#resultTableContent');
+                    var messagesPanel = $(parsedHTML).find('#messagesPanel');
+
+                    $('#resultTableContent').html(resultTableContent);
+                    $('#messagesPanel').html(messagesPanel);
                 },
             });
-        }
+            return false;
+        };
 
-        $(document).ready( function () {
-            $('#frmBusca').submit(
-                function () {
-                    ajaxSubmit('${ctx}/alimentos', 'POST', '#resultTable')
-                }
-            );
+        $('#consultarButton').on('click', function () {
+            submitSearch();
+        });
+
+        $('#frmBusca').on('submit', function () {
+            submitSearch();
+            return false;
         });
 
     </script>

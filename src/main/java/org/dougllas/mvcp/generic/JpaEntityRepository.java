@@ -207,6 +207,7 @@ public class JpaEntityRepository implements Serializable {
 
                 if(enableLike){
                     sb.append(" and upper(" + entityAlias + "." + fieldName + ") like upper(:" + fieldName + ") ");
+                    value = "%" + value.toString() + "%";
                 }else{
                     sb.append(" and " + entityAlias + "." + fieldName + " =:" + fieldName);
                 }

@@ -45,7 +45,8 @@
     </script>
 
     <div class="col-md-10 col-md-offset-1">
-        <form:form id="formulario" action="${pageContext.request.contextPath}/alimentos/add" method="post" modelAttribute="bean">
+        <div class="well">
+            <form:form id="formulario" action="${pageContext.request.contextPath}/alimentos/add" method="post" modelAttribute="bean">
 
             <fieldset>
                 <legend>Cadastro</legend>
@@ -115,6 +116,8 @@
                         <input type="submit" value="Salvar" class="btn btn-info" />
                     </div>
 
+                    <div class="col-sm-1">  </div>
+
                     <div class="col-sm-1">
                         <input type="button"
                                value="Voltar"
@@ -125,7 +128,7 @@
 
             </fieldset>
         </form:form>
-
+        </div>
         <script>
             var fcCalculaCalorias = function () {
                 var proteinas = document.getElementById('inputProteinas').value;

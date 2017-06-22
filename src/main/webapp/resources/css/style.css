@@ -1,0 +1,16 @@
+.center{
+    text-align: center;
+}
+
+.whitebg{
+    background: #FFFFFF;
+}
+
+.dialog{
+    display: none;
+}
+
+.invalid{
+    color: #FF0000;
+    font-weight: normal;
+}

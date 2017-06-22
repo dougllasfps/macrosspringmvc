@@ -13,7 +13,7 @@
 
 <html>
 <head>
-    <title>Dados Pessoa</title>
+    <title>Taxa M. Basal</title>
 </head>
 <body>
     <jsp:include page="/WEB-INF/templates/nav.jsp"/>
@@ -25,41 +25,40 @@
             maskInteger('.campoInteiro');
             maskQuantidade('.campoDouble');
             createDatePicker('.campoData');
-            createDialog('.dialog');
 
-//            $('#formulario').validate({
-//                errorClass: 'invalid',
-//                rules:{
-//                    data: {
-//                        required:true
-//                    },
-//                    idade: {
-//                        required : true,
-//                        min:10
-//                    },
-//                    peso: {
-//                        required:true
-//                    },
-//                    altura: {
-//                        required:true,
-//                        min:100
-//                    }
-//                },
-//                messages:{
-//                    idade:{
-//                        min : 'Idade deve ser maior que 10'
-//                    },
-//                    altura : {
-//                        min: 'Altura deve ser maior que 100 cm.'
-//                    }
-//
-//                },
-//                highlight: function(element, errorClass) {
-//                    $(element).fadeOut(function() {
-//                        $(element).fadeIn();
-//                    });
-//                }
-//            });
+            $('#formulario').validate({
+                errorClass: 'invalid',
+                rules:{
+                    data: {
+                        required:true
+                    },
+                    idade: {
+                        required : true,
+                        min:10
+                    },
+                    peso: {
+                        required:true
+                    },
+                    altura: {
+                        required:true,
+                        min:100
+                    }
+                },
+                messages:{
+                    idade:{
+                        min : 'Idade deve ser maior que 10'
+                    },
+                    altura : {
+                        min: 'Altura deve ser maior que 100 cm.'
+                    }
+
+                },
+                highlight: function(element, errorClass) {
+                    $(element).fadeOut(function() {
+                        $(element).fadeIn();
+                    });
+                }
+            });
         });
     </script>
 
@@ -112,15 +111,16 @@
             </form:form>
 
             <c:if test="${not empty list}">
+            <div class="well">
                 <div class="row">
                     <div class="col-lg-12">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover whitebg">
                             <thead>
                                 <tr>
-                                    <th>Data</th>
-                                    <th>Idade</th>
-                                    <th>Peso</th>
-                                    <th>Altura</th>
+                                    <th class="center">Data</th>
+                                    <th class="center">Idade</th>
+                                    <th class="center">Peso</th>
+                                    <th class="center">Altura</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -129,23 +129,23 @@
                             <tbody>
                                 <c:forEach var="item" items="${list}" >
                                     <tr>
-                                        <td  style="text-align: center;"><fmt:formatDate value="${item.data.time}" pattern="dd/MM/yyyy" /> </td>
-                                        <td  style="text-align: center;">${item.idade}</td>
-                                        <td  style="text-align: center;"><fmt:formatNumber value="${item.peso}" minFractionDigits="3" maxFractionDigits="3"/> </td>
-                                        <td  style="text-align: center;">${item.altura}</td>
-                                        <td style="text-align: center;">
-                                            <button class="btn btn-default"
-                                                    onclick="$('#macrosDialog').dialog('open');" >
+                                        <td   class="center"><fmt:formatDate value="${item.data.time}" pattern="dd/MM/yyyy" /> </td>
+                                        <td   class="center">${item.idade}</td>
+                                        <td   class="center"><fmt:formatNumber value="${item.peso}" minFractionDigits="3" maxFractionDigits="3"/> </td>
+                                        <td   class="center">${item.altura}</td>
+                                        <td s class="center">
+                                            <button type="button" class="btn btn-primary"
+                                                    data-toggle="modal" data-target="#resultadoModal" >
                                                 Calcular
                                             </button>
                                         </td>
-                                        <td style="text-align: center;">
+                                        <td  class="center">
                                             <button class="btn btn-success"
                                                     onclick="window.location.href='${pageContext.request.contextPath}/tmb/editar/${item.id}'" >
                                                 Editar
                                             </button>
                                         </td>
-                                        <td style="text-align: center;">
+                                        <td  class="center">
                                             <button class="btn btn-danger"
                                                     onclick="window.location.href='${pageContext.request.contextPath}/tmb/remove/${item.id}'" >
                                                 Remover
@@ -157,13 +157,31 @@
                         </table>
                     </div>
                 </div>
+            </div>
             </c:if>
 
         </fieldset>
     </div>
 
-    <div id="macrosDialog" class="dialog">
-        Dialog parça
+    <div class="modal fade" id="resultadoModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resultado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p>modal</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" >Salvar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

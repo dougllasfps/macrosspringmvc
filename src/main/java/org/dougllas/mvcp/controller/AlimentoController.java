@@ -7,10 +7,7 @@ import org.dougllas.mvcp.view.messages.ViewMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,7 +36,9 @@ public class AlimentoController implements Serializable {
     }
 
     @RequestMapping(value = "/alimentos", method = RequestMethod.POST)
-    public ModelAndView find( @ModelAttribute("filtro") Alimento filtro ){
+    public ModelAndView find( @ModelAttribute("descricao") String descricao ){
+        Alimento filtro = new Alimento();
+        filtro.setDescricao(descricao);
         List<Alimento> result = alimentoService.filter(filtro);
 
         ModelAndView model = new ModelAndView("/alimentos/list");
