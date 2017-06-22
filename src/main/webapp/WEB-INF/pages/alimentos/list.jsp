@@ -106,7 +106,7 @@
                                         </td>
                                         <td class="center">
                                             <a id="btnDelete"
-                                               class="btn btn-danger"  o
+                                               class="btn btn-danger"
                                                onclick="if(confirm('Confirma a exclusão?')){window.location.href='${ctx}/alimentos/remove/${produto.id}';}">Excluir
                                             </a>
                                         </td>
@@ -128,34 +128,34 @@
         </div>
 </div>
 
-    <script>
-        var submitSearch = function () {
-            $.ajax({
-                url : '${ctx}/alimentos',
-                data:{'descricao' : $('#inputDescricao').val() },
-                type: 'POST',
-                success : function(response) {
-                    var parsedHTML = $.parseHTML(response);
-                    var resultTableContent = $(parsedHTML).find('#resultTableContent');
-                    var messagesPanel = $(parsedHTML).find('#messagesPanel');
+<script>
+    var submitSearch = function () {
+        $.ajax({
+            url : '${ctx}/alimentos',
+            data:{'descricao' : $('#inputDescricao').val() },
+            type: 'POST',
+            success : function( response ) {
+                var parsedHTML = $.parseHTML(response);
+                var resultTableContent = $(parsedHTML).find('#resultTableContent');
+                var messagesPanel = $(parsedHTML).find('#messagesPanel');
 
-                    $('#resultTableContent').html(resultTableContent);
-                    $('#messagesPanel').html(messagesPanel);
-                },
-            });
-            return false;
-        };
-
-        $('#consultarButton').on('click', function () {
-            submitSearch();
+                $('#resultTableContent').html(resultTableContent);
+                $('#messagesPanel').html(messagesPanel);
+            },
         });
+        return false;
+    };
 
-        $('#frmBusca').on('submit', function () {
-            submitSearch();
-            return false;
-        });
+    $('#consultarButton').on('click', function () {
+        submitSearch();
+    });
 
-    </script>
+    $('#frmBusca').on('submit', function () {
+        submitSearch();
+        return false;
+    });
+
+</script>
 
 </body>
 </html>
